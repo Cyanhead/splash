@@ -2,8 +2,20 @@
   <main>
     <section class="container">
       <div class="grid">
+        <template v-if="status === 'loading' || isLoadingInitial">
+          <template v-for="_ in 10" :key="_">
+            <Skeleton />
+          </template>
+        </template>
+
         <template v-for="photo in photos" :key="photo.id">
           <PhotoCard :photo="photo" />
+        </template>
+
+        <template v-if="isLoadingMore">
+          <template v-for="_ in 10" :key="_">
+            <Skeleton />
+          </template>
         </template>
       </div>
     </section>
@@ -12,10 +24,16 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { Photo } from '../types';
+import { Photo, Status } from '../types';
 import PhotoCard from './PhotoCard.vue';
+import Skeleton from './Skeleton.vue';
 
-defineProps<{ photos: Photo[] }>();
+defineProps<{
+  photos: Photo[];
+  status: Status;
+  isLoadingInitial: boolean;
+  isLoadingMore: boolean;
+}>();
 </script>
 
 <style scoped lang="scss">

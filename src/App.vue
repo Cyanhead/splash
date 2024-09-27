@@ -1,13 +1,17 @@
 <template>
   <Searchbar v-model="searchQuery" :status="fetchStatus" />
 
-  <h3 v-if="fetchStatus === 'loading'">Loading...</h3>
   <h3 v-if="fetchError">
     {{ fetchError }}
   </h3>
 
-  <template v-if="fetchStatus === 'success' || fetchStatus === 'idle'">
-    <Gallery :photos="photos" />
+  <template v-if="fetchStatus !== 'error'">
+    <Gallery
+      :photos="photos"
+      :status="fetchStatus"
+      :is-loading-initial="isLoadingInitial"
+      :is-loading-more="isLoadingMore"
+    />
   </template>
 
   <div v-if="isLoadingMore && fetchStatus === 'success'">Loading...</div>
@@ -25,6 +29,7 @@ const fetchStatus = ref<Status>('idle');
 const fetchError = ref<string | null>(null);
 const photos = ref<Photo[]>([]);
 const page = ref(1);
+const isLoadingInitial = ref(false);
 const isLoadingMore = ref(false);
 
 const observer = ref<IntersectionObserver | null>(null);
@@ -44,6 +49,7 @@ onMounted(async () => {
 });
 
 async function loadInitialPhotos() {
+  isLoadingInitial.value = true;
   fetchError.value = null;
 
   try {
@@ -56,6 +62,8 @@ async function loadInitialPhotos() {
     }
   } catch (err: any) {
     fetchError.value = err.message || 'Error loading initial photos';
+  } finally {
+    isLoadingInitial.value = false;
   }
 }
 
@@ -129,7 +137,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .sentinel {
-  height: 1px;
+  height: 100px;
   visibility: hidden;
 }
 </style>

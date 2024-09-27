@@ -26,6 +26,8 @@ defineProps<{ photo: Photo }>();
   border-radius: 8px;
   overflow: hidden;
 
+  background-color: #f5f5f5;
+
   img {
     width: 100%;
     height: 100%;
@@ -44,7 +46,7 @@ defineProps<{ photo: Photo }>();
     justify-content: end;
 
     height: 50%;
-    padding: 10px;
+    padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
     color: white;
     text-align: center;
