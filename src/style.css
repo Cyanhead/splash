@@ -1,14 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 :root {
+  --text-light: #ffffff;
+  --text-dark: #222222;
+
+  --bg-light: #ffffff;
+  --bg-dark: #222222;
+
+  /* --breakpoint-xl: 1200px;
+  --breakpoint-lg: 992px;
+  --breakpoint-md: 768px;
+  --breakpoint-sm: 576px;
+  --breakpoint-xs: 480px; */
+
+  --wrapper-width: 1280px;
+  --wrapper-padding-sm: 40px 16px;
+  --wrapper-padding-md: 48px 24px;
+  --wrapper-padding-lg: 56px 40px;
+
   font-family: 'Lato', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-style: normal;
 
   color-scheme: light dark;
-  color: #222222;
-  background-color: #ffffff;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
