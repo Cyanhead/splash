@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "unsplash-js": "^7.0.19",
     "vue": "^3.4.37"
   },
   "devDependencies": {
