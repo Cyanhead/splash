@@ -7,45 +7,10 @@
   </div>
 </template>
 
-<style scoped lang="scss">
-.card {
-  position: relative;
-
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-  overflow: hidden;
-
-  background-color: #f5f5f5;
-
-  @media screen and (min-width: 768px) {
-    aspect-ratio: 9 / 10;
-    height: 100%;
-    grid-row: span 10;
-
-    &:first-child {
-      grid-row: span 7;
-    }
-
-    &:nth-child(3) {
-      grid-row: span 9;
-    }
-  }
-}
-
+<style lang="scss" src="./styles.scss" scoped></style>
+<style lang="scss" scoped>
 .attribution {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: end;
   gap: 8px;
-
-  padding: 24px;
 
   div {
     height: 20px;

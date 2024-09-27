@@ -18,16 +18,9 @@ import { Photo } from '../types';
 defineProps<{ photo: Photo }>();
 </script>
 
+<style lang="scss" src="./styles.scss" scoped></style>
 <style lang="scss" scoped>
-.card {
-  position: relative;
-
-  width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-
-  background-color: #f5f5f5;
-
+div.card {
   img {
     width: 100%;
     height: 100%;
@@ -35,21 +28,7 @@ defineProps<{ photo: Photo }>();
   }
 
   .attribution {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: end;
-
-    height: 50%;
-    padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
-    color: white;
-    text-align: center;
 
     h3 {
       font-weight: 500;
@@ -61,20 +40,6 @@ defineProps<{ photo: Photo }>();
       @media screen and (min-width: 768px) {
         font-size: 14px;
       }
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    aspect-ratio: 9 / 10;
-    height: 100%;
-    grid-row: span 10;
-
-    &:first-child {
-      grid-row: span 7;
-    }
-
-    &:nth-child(3) {
-      grid-row: span 9;
     }
   }
 }
