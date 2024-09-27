@@ -1,71 +1,53 @@
 <template>
-  <Searchbar v-model="queryTerm" :status="status" />
+  <Searchbar v-model="searchQuery" :status="fetchStatus" />
 
-  <h3 v-if="status === 'loading'">Loading...</h3>
-  <h3 v-if="error">
-    {{ error }}
+  <h3 v-if="fetchStatus === 'loading'">Loading...</h3>
+  <h3 v-if="fetchError">
+    {{ fetchError }}
   </h3>
 
-  <template v-if="status === 'success' || status === 'idle'">
+  <template v-if="fetchStatus === 'success' || fetchStatus === 'idle'">
     <Gallery :photos="photos" />
   </template>
+
+  <div v-if="isLoadingMore && fetchStatus === 'success'">Loading...</div>
+  <div ref="sentinel" class="sentinel"></div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import { createApi } from 'unsplash-js';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Gallery, Searchbar } from './components';
 import { Photo, Status } from './types';
+import { fetchPhotos } from './helpers';
 
-const api = createApi({
-  accessKey: import.meta.env.VITE_UNSPLASH_ACCESS_KEY,
-});
-
-const queryTerm = ref<string | undefined>();
-const status = ref<Status>('idle');
-const isSearching = ref(false);
-const error = ref<string | null>(null);
+const searchQuery = ref<string>('');
+const fetchStatus = ref<Status>('idle');
+const fetchError = ref<string | null>(null);
 const photos = ref<Photo[]>([]);
+const page = ref(1);
+const isLoadingMore = ref(false);
+
+const observer = ref<IntersectionObserver | null>(null);
+const sentinel = ref(null);
 
 // watch for changes in the queryTerm and trigger a search
-watch(queryTerm, async newTerm => {
+watch(searchQuery, async newTerm => {
   if (newTerm) {
-    await searchImages(newTerm);
+    await searchPhotos(newTerm);
   }
 });
 
-// fetch initial photos on mount
 onMounted(async () => {
+  // fetch initial photos on mount
   await loadInitialPhotos();
+  setupIntersectionObserver();
 });
-
-async function searchImages(keyword: string) {
-  isSearching.value = true;
-  error.value = null;
-  status.value = 'loading';
-
-  try {
-    const data = await fetchPhotos(keyword);
-
-    if (data && data.response && data.response.results) {
-      photos.value = data.response.results;
-      status.value = 'success';
-    } else {
-      throw new Error('No results');
-    }
-  } catch (err: any) {
-    error.value = err.message || 'Error fetching images';
-    status.value = 'error';
-  } finally {
-    isSearching.value = false;
-  }
-}
 
 async function loadInitialPhotos() {
-  error.value = null;
+  fetchError.value = null;
 
   try {
-    const data = await fetchPhotos('African'); // Default search term
+    const data = await fetchPhotos('African');
 
     if (data && data.response && data.response.results) {
       photos.value = data.response.results;
@@ -73,14 +55,81 @@ async function loadInitialPhotos() {
       throw new Error('No results');
     }
   } catch (err: any) {
-    error.value = err.message || 'Error loading initial photos';
+    fetchError.value = err.message || 'Error loading initial photos';
   }
 }
 
-async function fetchPhotos(query: string) {
-  return await api.search.getPhotos({
-    query,
-    orientation: 'portrait',
-  });
+async function searchPhotos(newSearchQuery: string) {
+  fetchError.value = null;
+  fetchStatus.value = 'loading';
+  searchQuery.value = newSearchQuery;
+  page.value = 1; // reset page for new search
+  photos.value = []; // clear current photos
+
+  try {
+    const data = await fetchPhotos(newSearchQuery);
+
+    if (data && data.response && data.response.results) {
+      photos.value = data.response.results;
+      fetchStatus.value = 'success';
+    } else {
+      throw new Error('No results');
+    }
+  } catch (err: any) {
+    fetchError.value = err.message || 'Error fetching images';
+    fetchStatus.value = 'error';
+  }
 }
+
+async function loadMorePhotos() {
+  isLoadingMore.value = true;
+  fetchError.value = null;
+  page.value++;
+  try {
+    const data = await fetchPhotos(searchQuery.value || 'African', page.value);
+
+    if (data && data.response && data.response.results) {
+      photos.value = [...photos.value, ...data.response.results];
+    } else {
+      throw new Error('No results');
+    }
+  } catch (err: any) {
+    fetchError.value = err.message || 'Error loading more photos';
+  } finally {
+    isLoadingMore.value = false;
+  }
+}
+
+const setupIntersectionObserver = () => {
+  observer.value = new IntersectionObserver(
+    async entries => {
+      const entry = entries[0];
+      if (entry.isIntersecting && !isLoadingMore.value) {
+        await loadMorePhotos();
+      }
+    },
+    {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    }
+  );
+
+  if (sentinel.value && observer.value) {
+    (observer.value as IntersectionObserver).observe(sentinel.value);
+  }
+};
+
+onBeforeUnmount(() => {
+  if (sentinel.value && observer.value) {
+    (observer.value as IntersectionObserver).unobserve(sentinel.value);
+  }
+});
 </script>
+
+<style scoped lang="scss">
+.sentinel {
+  height: 1px;
+  visibility: hidden;
+}
+</style>
