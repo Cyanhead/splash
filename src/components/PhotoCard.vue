@@ -1,6 +1,6 @@
 <template>
   <button class="card" type="button" @click="viewPhoto = true">
-    <img :src="photo.urls.thumb" :alt="`photo of ${searchQuery}`" />
+    <img :src="photo.urls.small" :alt="`photo of ${searchQuery}`" />
     <div class="attribution">
       <h3>
         {{ photo.user.name }}

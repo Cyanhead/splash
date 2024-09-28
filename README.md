@@ -19,6 +19,23 @@ Splash is a simple Unsplash clone built with **Vue 3's Composition API**. It all
 - **Unsplash API** (for fetching images)
 - **SCSS** (for styling)
 
+## Screenshots
+
+#### Desktop
+
+![desktop](/src/assets/screenshots/desktop_view_1.png)
+![desktop](/src/assets/screenshots/desktop_view_2.png)
+
+#### Tab
+
+![tab](/src/assets/screenshots/tab_view_1.png)
+![tab](/src/assets/screenshots/tab_view_2.png)
+
+#### Mobile
+
+![mobile](/src/assets/screenshots/mobile_view_1.png)
+![mobile](/src/assets/screenshots/mobile_view_2.png)
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/) (>=14.x recommended)
