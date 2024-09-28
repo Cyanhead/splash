@@ -36,5 +36,41 @@
     padding: 24px;
     color: white;
     text-align: center;
+
+    h3 {
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 16px;
+
+      @media screen and (min-width: 768px) {
+        font-size: 14px;
+      }
+    }
   }
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  .icon {
+    width: 24px;
+  }
+}
+
+.visually-hidden {
+  display: inline-block;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1;
+  padding: 0;
+  border: 0;
 }

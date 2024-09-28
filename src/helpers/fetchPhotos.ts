@@ -7,7 +7,7 @@ export async function fetchPhotos(query: string, page: number = 1) {
 
   return await api.search.getPhotos({
     query,
-    orientation: 'portrait',
+    orientation: 'landscape',
     page,
     perPage: 10,
   });

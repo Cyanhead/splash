@@ -19,12 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, provide, ref, watch } from 'vue';
 import { Gallery, Searchbar } from './components';
 import { Photo, Status } from './types';
 import { fetchPhotos } from './helpers';
 
 const searchQuery = ref<string>('');
+provide('searchQuery', searchQuery);
 const fetchStatus = ref<Status>('idle');
 const fetchError = ref<string | null>(null);
 const photos = ref<Photo[]>([]);

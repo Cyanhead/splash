@@ -2,8 +2,13 @@
   <header>
     <section class="container">
       <div v-show="status === 'idle'" class="search-bar-wrapper">
-        <div class="search-icon-wrapper">
-          <img class="search-icon" src="../assets/search_icon.svg" alt="" />
+        <div class="icon-wrapper">
+          <img
+            class="icon search-icon"
+            src="../assets/search_icon.svg"
+            alt=""
+          />
+          <span class="visually-hidden">Search</span>
         </div>
         <input
           type="search"
@@ -30,6 +35,7 @@ defineProps<{ status: Status }>();
 const searchTerm = defineModel({ default: '' });
 </script>
 
+<style lang="scss" src="./styles.scss" scoped></style>
 <style scoped lang="scss">
 header {
   width: 100%;
@@ -100,17 +106,8 @@ input[type='search'] {
   outline: none;
 }
 
-.search-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-
+.icon-wrapper {
   background-color: var(--bg-light);
   color: grey;
-
-  .search-icon {
-    width: 24px;
-  }
 }
 </style>

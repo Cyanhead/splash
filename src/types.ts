@@ -2,8 +2,6 @@ import { Nullable } from 'unsplash-js/dist/helpers/typescript';
 
 export type Photo = {
   id: string;
-  // width: number;
-  // height: number;
   urls: {
     full: string;
     regular: string;
@@ -11,7 +9,6 @@ export type Photo = {
     small: string;
     thumb: string;
   };
-  // color: string | null;
   user: {
     username: string;
     name: string;
