@@ -5,7 +5,7 @@
   border-radius: 8px;
   overflow: hidden;
 
-  background-color: #f5f5f5;
+  background-color: var(--bg-gray);
 
   @media screen and (min-width: 768px) {
     aspect-ratio: 9 / 10;

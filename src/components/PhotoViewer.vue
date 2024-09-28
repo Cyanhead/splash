@@ -40,15 +40,16 @@ onBeforeUnmount(() => {
   height: 70vh;
   height: 70dvh;
   max-width: 90vw;
+  overflow-x: auto;
+
+  background-color: var(--bg-gray);
 
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 
-  overflow-x: auto;
-
   img.photo-banner {
     height: 100%;
-    min-width: 800px;
+    min-width: 1000px;
 
     object-fit: cover;
   }
@@ -56,10 +57,19 @@ onBeforeUnmount(() => {
 
 .attribution {
   position: static;
-  background-color: var(--bg-light);
-  padding: 32px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  background-color: var(--bg-light);
+
+  padding: 28px 40px;
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
+
+  p {
+    color: var(--text-gray);
+  }
 }
 </style>

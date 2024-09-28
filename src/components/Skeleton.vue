@@ -14,7 +14,7 @@
 
   div {
     height: 20px;
-    background-color: #e6e6e6;
+    background-color: var(--bg-gray-2);
   }
 
   .artist {
@@ -27,7 +27,12 @@
 }
 
 .shimmer {
-  background-image: linear-gradient(90deg, #e6e6e6, #cccccc, #e6e6e6);
+  background-image: linear-gradient(
+    90deg,
+    var(--bg-gray-2),
+    #cccccc,
+    var(--bg-gray-2)
+  );
 
   background-size: 120px;
   background-repeat: no-repeat;

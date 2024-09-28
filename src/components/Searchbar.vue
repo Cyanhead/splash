@@ -71,10 +71,10 @@ header {
 
 h2 {
   line-height: 56px;
-  color: #2c3553;
+  color: var(--text-dark);
 
   span {
-    color: #747d8d;
+    color: var(--text-gray);
   }
 }
 
@@ -92,7 +92,8 @@ h2 {
     border: 1px solid black;
   }
   ::placeholder {
-    color: var(--text-dark);
+    color: #222222;
+    opacity: 0.8;
   }
 }
 
