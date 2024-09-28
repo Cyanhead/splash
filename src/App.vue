@@ -14,7 +14,6 @@
     />
   </template>
 
-  <div v-if="isLoadingMore && fetchStatus === 'success'">Loading...</div>
   <div ref="sentinel" class="sentinel"></div>
 </template>
 
@@ -41,12 +40,6 @@ watch(searchQuery, async newTerm => {
   if (newTerm) {
     await searchPhotos(newTerm);
   }
-});
-
-onMounted(async () => {
-  // fetch initial photos on mount
-  await loadInitialPhotos();
-  setupIntersectionObserver();
 });
 
 async function loadInitialPhotos() {
@@ -128,6 +121,12 @@ const setupIntersectionObserver = () => {
     (observer.value as IntersectionObserver).observe(sentinel.value);
   }
 };
+
+onMounted(async () => {
+  // fetch initial photos on mount
+  await loadInitialPhotos();
+  setupIntersectionObserver();
+});
 
 onBeforeUnmount(() => {
   if (sentinel.value && observer.value) {
