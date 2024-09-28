@@ -72,6 +72,7 @@ header {
 h2 {
   line-height: 56px;
   color: var(--text-dark);
+  font-size: calc(40 / 16 * 1rem);
 
   span {
     color: var(--text-gray);

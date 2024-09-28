@@ -3,7 +3,7 @@
     <section class="container">
       <div class="grid">
         <template v-if="status === 'loading' || isLoadingInitial">
-          <template v-for="_ in 10" :key="_">
+          <template v-for="_ in PHOTOS_PER_PAGE" :key="_">
             <Skeleton />
           </template>
         </template>
@@ -13,7 +13,7 @@
         </template>
 
         <template v-if="isLoadingMore">
-          <template v-for="_ in 10" :key="_">
+          <template v-for="_ in PHOTOS_PER_PAGE" :key="_">
             <Skeleton />
           </template>
         </template>
@@ -27,6 +27,7 @@ import { defineProps } from 'vue';
 import { Photo, Status } from '../types';
 import PhotoCard from './PhotoCard.vue';
 import Skeleton from './Skeleton.vue';
+import { PHOTOS_PER_PAGE } from '../constants';
 
 defineProps<{
   photos: Photo[];
